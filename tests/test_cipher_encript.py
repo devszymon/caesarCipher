@@ -21,12 +21,6 @@ def test_should_return_shifted_string_for_lowercase_letters():
 
     assert encrypt.encrypt(text, shift) == "cde"
 
-    text = "12x Z 9-_B"
-    shift = 2
-    encrypt = CaesarMethods()
-
-    assert encrypt.encrypt(text, shift) == "12z B 9-_D"
-
 
 def test_should_return_shifted_string_for_uppercase_and_lowercase_letters():
     text = "AbCdEfGHHh"
@@ -34,6 +28,20 @@ def test_should_return_shifted_string_for_uppercase_and_lowercase_letters():
     encrypt = CaesarMethods()
     assert encrypt.encrypt(text, shift) == "DeFgHiJKKk"
 
+    text = "XyZAbz"
+    shift = 1
+    encrypt = CaesarMethods()
+    assert encrypt.encrypt(text, shift) == "YzABca"
+
+
+def test_should_return_shifted_string_for_lowercase_and_uppercase_letters_and_nums():
+    text = "12x Z 9-_B"
+    shift = 2
+    encrypt = CaesarMethods()
+
+    assert encrypt.encrypt(text, shift) == "12z B 9-_D"
+
 
 test_should_return_shifted_string_for_lowercase_letters()
 test_should_return_shifted_string_for_uppercase_and_lowercase_letters()
+test_should_return_shifted_string_for_lowercase_and_uppercase_letters_and_nums()
