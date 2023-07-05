@@ -1,3 +1,5 @@
+import datetime
+
 from functions.decrypt_from_json import DecryptJson
 from functions.decrypter import Decrypter
 from functions.encrypt_from_json import EncryptJson
@@ -8,11 +10,14 @@ from functions.read_json import ReadJson
 class Facade:
     def __init__(self):
         self.__is_running = True
+        self._history = []
         self.choices = {
             1: self._encrypt_text,
             2: self._decrypt_text,
             3: self._encrypt_from_json,
             4: self._decrypt_from_json,
+            5: self._show_history,
+            6: self._save_to_file,
             9: self._close_app,
         }
         self._start()
@@ -29,6 +34,8 @@ class Facade:
         2. Decrypt text
         3. Encrypt from json file
         4. Decrypt from json file
+        5. Show all operations
+        6. Save all operations to file
         9. Close app
         """
         print(menu)
@@ -46,24 +53,59 @@ class Facade:
         shift = int(input("Enter number of shift (max: 31): "))
         encrypted_text = Encrypter.encrypt_text(text=user_text, shift=shift)
         print(f"Your encrypted text is: {encrypted_text}")
+        self._history.append((user_text, encrypted_text, shift))
 
     def _decrypt_text(self):
         user_text = input("Enter your text: ")
         shift = int(input("Enter number of shift (max: 31): "))
         decrypted_text = Decrypter.decrypt_text(text=user_text, shift=shift)
         print(f"Your decrypted text is: {decrypted_text}")
+        self._history.append((user_text, decrypted_text, shift))
 
     def _encrypt_from_json(self):
         user_file = input("Enter the name of the json file: ")
         converted_data = ReadJson.read_json(user_file)
         encrypted_text = EncryptJson.encrypt_from_json(data=converted_data)
         print(f"Encrypted word/words from json is/are: {encrypted_text}")
+        self._history.append(
+            (
+                "Encryption from json",
+                converted_data,
+                encrypted_text,
+                "shown before",
+            )
+        )
 
     def _decrypt_from_json(self):
         user_file = input("Enter the name of the json file: ")
         converted_data = ReadJson.read_json(user_file)
         decrypted_text = DecryptJson.decrypt_from_json(data=converted_data)
         print(f"Encrypted word/words from json is/are: {decrypted_text}")
+        self._history.append(
+            (
+                "Encryption from json",
+                converted_data,
+                decrypted_text,
+                "shown before",
+            )
+        )
+
+    def _show_history(self):
+        print(self._history)
+
+    def return_history(self):
+        history = []
+        for operation in self._history:
+            history.append(" ".join(str(element) for element in operation))
+        return history
+
+    def _save_to_file(self):
+        user_file = input("Enter name of the file you want to save: ")
+        with open(user_file, "w") as f:
+            for _ in self.return_history():
+                f.write(f"{datetime.datetime.now()}\n")
+                f.write(_)
+                f.write("\n")
 
     def _close_app(self):
         quit()
