@@ -9,12 +9,12 @@ from facade import Decrypter
     "text_to_decrypt, shift, expected_text",
     [
         ("cde", 2, "abc"),
-        ("abc", 0, "abc"),
+        ("XyZ", 1, "WxY"),
         ("abc", -1, "bcd"),
         ("", 3, ""),
     ],
 )
-def test_should_return_decrypted_string_for_lowercase_and_uppercase_letters(
+def test_should_return_decrypted_string_for_letters_and_numbers(
     text_to_decrypt, shift, expected_text
 ):
     actual_text = Decrypter.decrypt_text(text_to_decrypt, shift)
@@ -22,6 +22,6 @@ def test_should_return_decrypted_string_for_lowercase_and_uppercase_letters(
     assert actual_text == expected_text
 
 
-# def test_should_raise_error_when_shift_value_is_lesser_than_0():
+# def test_should_raise_error_when_shift_value_is_lesser_than_0(): jak to zrobic
 #     with pytest.raises(shift_lesser_than_0.ShiftLowerThan0):
 #         Decrypter.decrypt_text("abc", -1)

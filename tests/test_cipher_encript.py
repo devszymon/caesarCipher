@@ -11,6 +11,7 @@ from facade import Encrypter
         ("1352", 3, "1352"),
         ("", 3, ""),
         ("1 dsa 02k LT!#@a", 2, "1 fuc 02m NV!#@c"),
+        ("XyZ(*96", 2, "ZaB(*96"),
     ],
 )
 def test_should_return_shifted_string_for_uppercase_and_lowercase_letters(

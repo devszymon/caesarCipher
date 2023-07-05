@@ -4,3 +4,4 @@ venv
 __pycache__/
 /json_example.json
 tests/pycache/
+/funcionality/
