@@ -11,8 +11,8 @@ class Encrypter:
     @staticmethod
     def encrypt_text(text: str, shift: int) -> str:
         new_text = ""
-        # if shift < 0:
-        #     raise shift_lesser_than_0.ShiftLowerThan0
+        if shift < 0:
+            raise shift_lesser_than_0.ShiftLowerThan0
         for char in text:
             if char in LETTERS_LOWERCASE:
                 index = LETTERS_LOWERCASE.index(char)
