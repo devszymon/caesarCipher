@@ -13,8 +13,7 @@ def logger_decorator(func):
         # Logging information about the function call
         timestamp = datetime.datetime.now()
         function_name = func.__name__
-        parameters = ", ".join([str(kwrg) for kwrg in kwargs])
-        log_message = f"[{timestamp}] Function '{function_name}' called with parameters: {parameters}"
+        log_message = f"[{timestamp}] Function '{function_name}' called"
 
         # Saving the log message to history
         self._history.append(log_message)
@@ -85,33 +84,35 @@ class Facade:
         print(f"Your decrypted text is: {decrypted_text}")
         # self._history.append((user_text, decrypted_text, shift))
 
+    @logger_decorator
     def _encrypt_from_json(self):
         user_file = input("Enter the name of the json file: ")
         converted_data = ReadJson.read_json(user_file)
         encrypted_text = EncryptJson.encrypt_from_json(data=converted_data)
         print(f"Encrypted word/words from json is/are: {encrypted_text}")
-        self._history.append(
-            (
-                "Encryption from json",
-                converted_data,
-                encrypted_text,
-                "shown before",
-            )
-        )
+        # self._history.append(
+        #     (
+        #         "Encryption from json",
+        #         converted_data,
+        #         encrypted_text,
+        #         "shown before",
+        #     )
+        # )
 
+    @logger_decorator
     def _decrypt_from_json(self):
         user_file = input("Enter the name of the json file: ")
         converted_data = ReadJson.read_json(user_file)
         decrypted_text = DecryptJson.decrypt_from_json(data=converted_data)
         print(f"Encrypted word/words from json is/are: {decrypted_text}")
-        self._history.append(
-            (
-                "Encryption from json",
-                converted_data,
-                decrypted_text,
-                "shown before",
-            )
-        )
+        # self._history.append(
+        #     (
+        #         "Encryption from json",
+        #         converted_data,
+        #         decrypted_text,
+        #         "shown before",
+        #     )
+        # )
 
     def return_history(self):
         history = []
